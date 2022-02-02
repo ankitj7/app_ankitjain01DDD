@@ -1,12 +1,18 @@
 pipeline {
   agent any
 
+  tools {
+    maven 'Maven3'
+  }
+  
   environment {
     scannerHome = 'sonar_scanner_dotnet'
   }
 
   options {
     timestamps()
+    
+    timeout(time: 1, unit: 'HOURS')
   }
 
   stages {
@@ -14,6 +20,7 @@ pipeline {
     stage("Build") {
       steps {
         echo "Build step started"
+        sh 'mvn clean install'
       }
     }
     
@@ -23,6 +30,7 @@ pipeline {
       }
       steps {
         echo "Test case step started"
+        sh 'mvn test'
       }
     }
     
@@ -38,6 +46,7 @@ pipeline {
     stage("Kubernets Deployment") {
       steps {
         echo "Kubernets Deployment step started"
+        echo env.BRANCH_NAME
       }
     }
     
