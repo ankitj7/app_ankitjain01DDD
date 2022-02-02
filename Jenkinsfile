@@ -20,7 +20,7 @@ pipeline {
     stage("Build") {
       steps {
         echo "Build step started"
-        sh 'mvn clean install'
+        bat 'mvn clean install'
       }
     }
     
@@ -30,7 +30,7 @@ pipeline {
       }
       steps {
         echo "Test case step started"
-        sh 'mvn test'
+        bat 'mvn test'
       }
     }
     
